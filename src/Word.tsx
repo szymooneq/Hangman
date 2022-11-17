@@ -1,27 +1,14 @@
-type WordProps = {
+import styled from "styled-components";
+
+interface WordProps {
   guessedLetters: string[];
   wordToGuess: string;
   reveal?: boolean;
 };
 
-export default function Word({
-  guessedLetters,
-  wordToGuess,
-  reveal = false
-}: WordProps) {
-  /* const word = "test"
-  const guessedLetters = ["e"] */
-
+export default function Word({ guessedLetters, wordToGuess, reveal = false }: WordProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: ".25em",
-        fontSize: "6rem",
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        fontFamily: "monospace"
-      }}>
+    <Container>
       {wordToGuess.split("").map((letter, id) => (
         <span key={id} style={{ borderBottom: ".1em solid black" }}>
           <span
@@ -37,6 +24,19 @@ export default function Word({
           </span>
         </span>
       ))}
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  gap: 1rem;
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: monospace;
+
+  @media (min-width: 768px) {
+    font-size: 5rem;
+  }
+`

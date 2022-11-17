@@ -1,86 +1,163 @@
-const HEAD = (
-  <div key="head" style={{ 
-    width: "50px", 
-    height: "50px", 
-    borderRadius: "100%", 
-    border: "10px solid black",
-    position: "absolute",
-    top: "50px",
-    right: "-30px" }} />
-)
+import styled from "styled-components";
 
-const BODY = (
-  <div key="body" style={{ 
-    width: "10px", 
-    height: "100px", 
-    background: "black", 
-    position: "absolute",
-    top: "120px",
-    right: 0 }} />
-)
+const Head = styled.div`
+  width: 50px; 
+  height: 50px; 
+  border-radius: 100%;
+  border: 10px solid black;
+  position: absolute;
+  top: 40px;
+  right: -20px;
+  
+  @media (min-width: 768px) {
+    top: 50px;
+  }
+`
 
-const RIGHT_ARM = (
-  <div key="right_arm" style={{ 
-    width: "100px", 
-    height: "10px", 
-    background: "black", 
-    position: "absolute",
-    top: "150px",
-    right: "-100px",
-    rotate: "-30deg",
-    transformOrigin: "left bottom" }} />
-)
+const Body = styled.div`
+  width: 10px;
+  height: 80px;
+  background: black;
+  position: absolute;
+  top: 90px;
+  right: 0;
 
-const LEFT_ARM = (
-  <div key="left_arm" style={{ 
-    width: "100px", 
-    height: "10px", 
-    background: "black", 
-    position: "absolute",
-    top: "150px",
-    right: "10px",
-    rotate: "30deg",
-    transformOrigin: "right bottom" }} />
-)
+  @media (min-width: 768px) {
+    height: 100px;
+    top: 100px;
+  }
+`
 
-const RIGHT_LEG = (
-  <div key="right_leg" style={{ 
-    width: "100px", 
-    height: "10px", 
-    background: "black", 
-    position: "absolute",
-    top: "210px",
-    right: "-90px",
-    rotate: "60deg",
-    transformOrigin: "left bottom" }} />
-)
+const RightArm = styled.div`
+  width: 70px;
+  height: 10px;
+  background: black;
+  position: absolute;
+  top: 110px;
+  right: -70px;
+  rotate: -30deg;
+  transform-origin: left bottom;
 
-const LEFT_LEG = (
-  <div key="left_leg" style={{ 
-    width: "100px", 
-    height: "10px", 
-    background: "black", 
-    position: "absolute",
-    top: "210px",
-    right: 0,
-    rotate: "-60deg",
-    transformOrigin: "right bottom" }} />
-)
+  @media (min-width: 768px) {
+    width: 100px;
+    top: 130px;
+    right: -100px;
+  }
+`
 
-const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG]
+const LeftArm = styled.div`
+  width: 70px;
+  height: 10px;
+  background: black;
+  position: absolute;
+  top: 110px;
+  right: 10px;
+  rotate: 30deg;
+  transform-origin: right bottom;
 
-type HangmanProps = {
+  @media (min-width: 768px) {
+    width: 100px;
+    top: 130px;
+  }
+`
+
+const RightLeg = styled.div`
+  width: 80px;
+  height: 10px;
+  background: black;
+  position: absolute;
+  top: 160px;
+  right: -70px;
+  rotate: 60deg;
+  transform-origin: left bottom;
+
+  @media (min-width: 768px) {
+    width: 100px;
+    top: 190px;
+    right: -90px;
+  }
+`
+
+const LeftLeg = styled.div`
+  width: 80px;
+  height: 10px;
+  background: black;
+  position: absolute;
+  top: 160px;
+  right: 0;
+  rotate: -60deg;
+  transform-origin: right bottom;
+
+  @media (min-width: 768px) {
+    width: 100px;
+    top: 190px;
+  }
+`
+
+const BODY_PARTS = [Head, Body, RightArm, LeftArm, RightLeg, LeftLeg]
+
+interface Hangman {
   numberOfGuesses: number
 }
 
-export default function HangmanDrawing({ numberOfGuesses }:HangmanProps) {
+export default function HangmanDrawing({ numberOfGuesses }:Hangman) {
   return (
     <div style={{ position: "relative" }}>
-      {BODY_PARTS.slice(0, numberOfGuesses)}
-      <div style={{ position: "absolute", top: 0, right: 0, height: "50px", width: "10px", background: "black" }}  />
-      <div style={{ height: "10px", width: "200px", background: "black", marginLeft: "120px" }}  />
-      <div style={{ height: "400px", width: "10px", background: "black", marginLeft: "120px" }}  />
-      <div style={{ height: "10px", width: "250px", background: "black"}} />
+      {BODY_PARTS.slice(0, numberOfGuesses).map((Component, id) => <Component key={id} />)}
+      <Base4 />
+      <Base3 />
+      <Base2 />
+      <Base1 />
     </div>
   )
 }
+
+const Base1 = styled.div`
+  height: 10px;
+  width: 120px;
+  background: black;
+
+  @media (min-width: 768px) {
+    height: 10px;
+    width: 200px;
+  }
+`
+
+const Base2 = styled.div`
+  margin-left: 60px;
+  height: 300px;
+  width: 10px;
+  background: black;
+
+  @media (min-width: 768px) {
+    margin-left: 100px;
+    height: 320px;
+    width: 10px;
+  }
+`
+
+const Base3 = styled.div`
+  margin-left: 60px;
+  height: 10px;
+  width: 150px;
+  background: black;
+
+  @media (min-width: 768px) {
+    margin-left: 100px;
+    height: 10px;
+    width: 200px;
+  }
+`
+
+const Base4 = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 10px;
+  background: black;
+
+  @media (min-width: 768px) {
+    height: 50px;
+  }
+`
