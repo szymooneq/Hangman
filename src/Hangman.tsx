@@ -1,5 +1,5 @@
 const HEAD = (
-  <div style={{ 
+  <div key="head" style={{ 
     width: "50px", 
     height: "50px", 
     borderRadius: "100%", 
@@ -10,7 +10,7 @@ const HEAD = (
 )
 
 const BODY = (
-  <div style={{ 
+  <div key="body" style={{ 
     width: "10px", 
     height: "100px", 
     background: "black", 
@@ -20,7 +20,7 @@ const BODY = (
 )
 
 const RIGHT_ARM = (
-  <div style={{ 
+  <div key="right_arm" style={{ 
     width: "100px", 
     height: "10px", 
     background: "black", 
@@ -32,7 +32,7 @@ const RIGHT_ARM = (
 )
 
 const LEFT_ARM = (
-  <div style={{ 
+  <div key="left_arm" style={{ 
     width: "100px", 
     height: "10px", 
     background: "black", 
@@ -44,7 +44,7 @@ const LEFT_ARM = (
 )
 
 const RIGHT_LEG = (
-  <div style={{ 
+  <div key="right_leg" style={{ 
     width: "100px", 
     height: "10px", 
     background: "black", 
@@ -56,7 +56,7 @@ const RIGHT_LEG = (
 )
 
 const LEFT_LEG = (
-  <div style={{ 
+  <div key="left_leg" style={{ 
     width: "100px", 
     height: "10px", 
     background: "black", 
@@ -69,11 +69,11 @@ const LEFT_LEG = (
 
 const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG]
 
-type HangmanDrawingProps = {
+type HangmanProps = {
   numberOfGuesses: number
 }
 
-export default function HangmanDrawing({ numberOfGuesses }:HangmanDrawingProps) {
+export default function HangmanDrawing({ numberOfGuesses }:HangmanProps) {
   return (
     <div style={{ position: "relative" }}>
       {BODY_PARTS.slice(0, numberOfGuesses)}
