@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Hangman from "./Hangman";
 import Keyboard from "./Keyboard";
@@ -26,14 +26,11 @@ export default function App() {
     .split("")
     .every((letter) => guessedLetters.includes(letter));
 
-  const addGuessedLetter = useCallback(
-    (letter: string) => {
-      if (!guessedLetters.includes(letter)) {
-        setGuessedLetters((currentLetters) => [...currentLetters, letter]);
-      }
-    },
-    [guessedLetters]
-  );
+  const addGuessedLetter = (letter: string) => {
+    if (!guessedLetters.includes(letter)) {
+      setGuessedLetters((currentLetters) => [...currentLetters, letter]);
+    }
+  }
 
   const restartHandler = () => {
     setWordToGuess(getRandomWord(words))
