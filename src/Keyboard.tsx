@@ -39,7 +39,7 @@ interface Keyboard {
 export default function Keyboard({ correctLetters, incorrectLetters, addGuessedLetter, disabled = false }: Keyboard) {
   return (
     <Container>
-      <InnerDiv>
+      <Grid>
 
         {KEYS.map((key) => {
           const active = correctLetters.includes(key);
@@ -57,7 +57,7 @@ export default function Keyboard({ correctLetters, incorrectLetters, addGuessedL
           );
         })}
         
-      </InnerDiv>
+      </Grid>
     </Container>
   );
 }
@@ -66,7 +66,7 @@ const Container = styled.div`
   align-self: stretch;
 `;
 
-const InnerDiv = styled.div`
+const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: .5rem;

@@ -1,13 +1,25 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Hangman from "./Hangman";
+import Drawing from "./Drawing";
 import Keyboard from "./Keyboard";
 import Word from "./Word";
 import words from "./wordList.json";
 
 const tryAgainIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><path fill="currentColor" fillRule="evenodd" d="M12.75 8a4.5 4.5 0 0 1-8.61 1.834l-1.391.565A6.001 6.001 0 0 0 14.25 8A6 6 0 0 0 3.5 4.334V2.5H2v4l.75.75h3.5v-1.5H4.352A4.5 4.5 0 0 1 12.75 8z" clipRule="evenodd"/></svg>
-)
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 16 16">
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12.75 8a4.5 4.5 0 0 1-8.61 1.834l-1.391.565A6.001 6.001 0 0 0 14.25 8A6 6 0 0 0 3.5 4.334V2.5H2v4l.75.75h3.5v-1.5H4.352A4.5 4.5 0 0 1 12.75 8z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
 
 function getRandomWord(arr: string[]) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -30,17 +42,25 @@ export default function App() {
     if (!guessedLetters.includes(letter)) {
       setGuessedLetters((currentLetters) => [...currentLetters, letter]);
     }
-  }
+  };
 
-  const restartHandler = () => {
-    setWordToGuess(getRandomWord(words))
-    setGuessedLetters([])
-  }
-  
+  const restartGame = () => {
+    setWordToGuess(getRandomWord(words));
+    setGuessedLetters([]);
+  };
+
   return (
     <Container>
-      <Header>Hangman</Header>
-      <Hangman numberOfGuesses={incorrectLetters.length} />
+      <Title>Hangman</Title>
+
+      {!(isWinner || isLoser) ? (
+        <Drawing numberOfGuesses={incorrectLetters.length} />
+      ) : (
+        <EndGame isWinner={isWinner}>
+          {isWinner && "You are winner!"}
+          {isLoser && "Nice try..."}
+        </EndGame>
+      )}
 
       <Word
         reveal={isLoser}
@@ -48,11 +68,9 @@ export default function App() {
         guessedLetters={guessedLetters}
       />
 
-      <EndGameMessage isWinner={isWinner}>
-        {isWinner && "Winner!"}
-        {isLoser && "Nice Try..."}
-        {(isWinner || isLoser) && <TryAgainButton onClick={restartHandler}>{tryAgainIcon}</TryAgainButton>}
-      </EndGameMessage>
+      {(isWinner || isLoser) && (
+        <TryAgainButton onClick={restartGame}>{tryAgainIcon}</TryAgainButton>
+      )}
 
       <Keyboard
         disabled={isWinner || isLoser}
@@ -64,14 +82,17 @@ export default function App() {
       />
 
       <Footer>
-        created with 💙 by <a href="https://szymondudka.xyz/" target="_blank">Szymon Dudka</a>
+        created with 💙 by{" "}
+        <a href="https://szymondudka.xyz/" target="_blank">
+          Szymon Dudka
+        </a>
       </Footer>
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,27 +100,29 @@ const Container = styled.div`
   gap: 2rem;
   min-height: 100vh;
   max-width: 800px;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  position: relative;;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  position: relative;
 
   @media (min-width: 768px) {
     margin: 0 auto;
   }
 `;
 
-const Header = styled.h1`
+const Title = styled.h1`
   padding: 15px;
-`
+`;
 
-const EndGameMessage = styled.div`
+const EndGame = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
   text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
-  color: ${(props: { isWinner: boolean }) => (props.isWinner ? "#ffd900" : "red")};
+  color: ${(props: { isWinner: boolean }) =>
+    props.isWinner ? "#ffd900" : "black"};
 
   @media (min-width: 768px) {
     font-size: 2rem;
@@ -107,32 +130,26 @@ const EndGameMessage = styled.div`
 `;
 
 const TryAgainButton = styled.button`
-  aspect-ratio: 1 / 1;
-  padding: .3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
   border: 3px solid black;
   border-radius: 1rem;
-  font-size: 2rem;
-  font-family: unset;
-  font-family: monospace;
-  text-transform: uppercase;
-  font-weight: bold;
+  font-size: 2.5rem;
   background: none;
   color: black;
   cursor: pointer;
 
-  &:hover:not(:disabled),
-  &:focus:not(:disabled) {
-    background-color: #F4D03F;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
+  &:hover,
+  &:focus {
+    background: #16a085;
   }
 
   @media (min-width: 768px) {
     font-size: 2.3rem;
   }
-`
+`;
 
 const Footer = styled.footer`
   margin: 0 auto;

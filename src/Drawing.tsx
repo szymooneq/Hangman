@@ -94,25 +94,7 @@ const LeftLeg = styled.div`
   }
 `
 
-const BODY_PARTS = [Head, Body, RightArm, LeftArm, RightLeg, LeftLeg]
-
-interface Hangman {
-  numberOfGuesses: number
-}
-
-export default function HangmanDrawing({ numberOfGuesses }:Hangman) {
-  return (
-    <div style={{ position: "relative" }}>
-      {BODY_PARTS.slice(0, numberOfGuesses).map((Component, id) => <Component key={id} />)}
-      <Base4 />
-      <Base3 />
-      <Base2 />
-      <Base1 />
-    </div>
-  )
-}
-
-const Base1 = styled.div`
+const Element1 = styled.div`
   height: 10px;
   width: 120px;
   background: black;
@@ -123,7 +105,7 @@ const Base1 = styled.div`
   }
 `
 
-const Base2 = styled.div`
+const Element2 = styled.div`
   margin-left: 60px;
   height: 300px;
   width: 10px;
@@ -136,7 +118,7 @@ const Base2 = styled.div`
   }
 `
 
-const Base3 = styled.div`
+const Element3 = styled.div`
   margin-left: 60px;
   height: 10px;
   width: 150px;
@@ -149,7 +131,7 @@ const Base3 = styled.div`
   }
 `
 
-const Base4 = styled.div`
+const Element4 = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -161,3 +143,19 @@ const Base4 = styled.div`
     height: 50px;
   }
 `
+
+const BodyParts = [Head, Body, RightArm, LeftArm, RightLeg, LeftLeg]
+const Gallows = [Element4, Element3, Element2, Element1]
+
+interface Drawing {
+  numberOfGuesses: number
+}
+
+export default function Drawing({ numberOfGuesses }:Drawing) {
+  return (
+    <div style={{ position: "relative" }}>
+      {BodyParts.slice(0, numberOfGuesses).map((Component, id) => <Component key={id} />)}
+      {Gallows.map((Component, id) => <Component key={id} />)}
+    </div>
+  )
+}
