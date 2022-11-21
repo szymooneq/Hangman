@@ -1,7 +1,7 @@
 # Hangman
-![tutorial thumbnail](./public/_thumbnail.jpg)
+![tutorial thumbnail](./src/_thumbnail.jpg)
 
-A simple game where you have to guess all the letters in a word.
+Hangman is a simple game where you have to guess all the letters in a word.
 
 https://hangman-sd.vercel.app
 
